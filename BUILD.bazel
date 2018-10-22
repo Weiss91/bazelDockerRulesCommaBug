@@ -1,0 +1,31 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+load("@io_bazel_rules_docker//go:image.bzl", "go_image")
+load("@io_bazel_rules_docker//container:container.bzl", "container_image")
+
+go_library(
+    name = "go_default_library",
+    srcs = [
+        "main.go",
+    ],
+    importpath = "main",
+    visibility = ["//visibility:private"],
+)
+
+go_image(
+    name = "layer_test_bug",
+    embed = [":go_default_library"],
+    pure = "on",
+    visibility = ["//visibility:public"],
+)
+
+container_image(
+    name = "image_test_bug",
+    base = ":layer_test_bug",
+    cmd = ["run"],
+    env = {
+        "BUGGY_ENV_VAR": "This does not work with a comma ,",
+    },
+    ports = ["12345"],
+    stamp = True,
+    visibility = ["//visibility:public"],
+)

@@ -20,4 +20,5 @@ Target //:image_test_bug failed to build
 Use --verbose_failures to see the command lines of failed build steps.
 INFO: Elapsed time: 2.517s, Critical Path: 0.79s
 INFO: 0 processes.
-FAILED: Build did NOT complete successfully```
+FAILED: Build did NOT complete successfully
+```
